@@ -49,12 +49,13 @@ const fetch_retry = ( n ) => {
         .then( response => response.json() )
         .then( data =>  {
             /* TODO: Handle when n === 0 */
-            if(data.photos.length === 0) {
+            if(data.photos.a === 0) {
                 return fetch_retry( n - 1 );
             } else {
                 return data;
             }
         })
+        .catch( error => console.log( error ) )  
 };
 
 const getRandomRoverData = () => {
