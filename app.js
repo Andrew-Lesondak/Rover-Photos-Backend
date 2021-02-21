@@ -6,7 +6,7 @@ const convert = require("xml-js");
 const { ROVER_DATA } = require('./constants.js');
 var cors = require("cors");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 80;
 
 // Allow CORS from any origin
 app.use(cors());
