@@ -13,12 +13,14 @@ app.use(cors());
 
 // Routes
 
-// Our NASA relay route!
+// NASA relay route!
 app.get("/api/search", async (req, res) => {
 
   try {
 
-    const results = fetch_retry( 10 );
+    const results = await fetch_retry( 10 );
+
+    console.log(results);
 
     return res.json({
 
@@ -30,14 +32,16 @@ app.get("/api/search", async (req, res) => {
   } catch (err) {
 
     return res.status(500).json({
+
       success: false,
       message: err.message,
+
     });
 
   }
 });
 
-// Spin up our sever and generates logs.
+// Spins up sever and generates logs.
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
@@ -45,7 +49,7 @@ const fetch_retry = ( n ) => {
 
     let [ rover, camera, solNum ] = getRandomRoverData();
 
-    fetch( `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.name}/photos?sol=${solNum}&camera=${camera.name}&api_key=${process.env.NASA_API_KEY}` )
+    return fetch( `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.name}/photos?sol=${solNum}&camera=${camera.name}&api_key=${process.env.NASA_API_KEY}` )
         .then( response => response.json() )
         .then( data =>  {
             /* TODO: Handle when n === 0 */
@@ -62,8 +66,6 @@ const getRandomRoverData = () => {
 
     let roverData = [];
     let solNum = 0;
-
-    console.log("rover data: ", ROVER_DATA);
 
     // random rover
     roverData = [ ...roverData, ROVER_DATA[ Math.floor( Math.random() * ROVER_DATA.length )]];
