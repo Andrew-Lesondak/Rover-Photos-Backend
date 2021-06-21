@@ -41,7 +41,7 @@ app.get("/api/search", async (req, res) => {
   }
 });
 
-// Spins up sever and generates logs.
+// Spins up server and generates logs.
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
